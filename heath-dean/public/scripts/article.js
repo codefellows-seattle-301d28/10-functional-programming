@@ -51,7 +51,10 @@ var app = app || {};
 
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
-      
+      return {
+        author: `${author}`,
+        wordcount: Article.all.filter(articleObj => articleObj.author === author).map(articleObj => articleObj.body.split(' ').length).reduce((acc, curr) => acc + curr)
+      }
     })
   };
 
