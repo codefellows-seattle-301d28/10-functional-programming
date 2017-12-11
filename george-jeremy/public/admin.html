@@ -12,6 +12,7 @@
     <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
 
     <script id="author-stats-template" type="text/x-handlebars-template">
+      <li>Author: {{name}} - Number of words {{words}}</li>
     </script>
 
   </head>
@@ -52,7 +53,7 @@
     <script src="scripts/article.js"></script>
     <script src="scripts/articleView.js"></script>
     <script>
-      app.Article.fetchAll();
+      app.Article.fetchAll(app.articleView.initAdminPage);
     </script>
   </body>
 </html>
