@@ -8,7 +8,6 @@ var app = app || {};
 console.log('inside function Article');
 
 Article.all = [];
-console.log('Article.all',Article.all);
 
 Article.prototype.toHtml = function() {
   var template = Handlebars.compile($('#article-template').text());
