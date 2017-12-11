@@ -23,6 +23,8 @@ var app = app || {};
     rawData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
 
+    // rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
+
     Article.all = rawData.map(articleObject => new Article(articleObject));
 
   };
@@ -43,13 +45,14 @@ var app = app || {};
   };
 
   Article.allAuthors = () => {
-    let authorName = function(articleObject) {
-      return articleObject.author;
-    };
-    return Article.all.map(authorName).reduce((acc,curr) => {
-      if (!acc.includes(curr)) {
-        acc.concat(curr);
+    // let authorName = function(articleObject) {
+    //   return articleObject.author;
+    // };
+    return Article.all.map(x => x.author).reduce((acc, curr) => {
+      if (acc.indexOf(curr) === -1) {
+        acc.push(curr);
       }
+      return acc;
     },[]);
   };
 
@@ -57,7 +60,7 @@ var app = app || {};
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
       return {
-        author: author.author,
+        author: `${author}`,
         wordcount: Article.all.filter(articleObj => articleObj.author === author).map(articleObj => articleObj.body.split(' ').length).reduce((acc,curr) => acc + curr)
         //.filter(with all articles written by this author)
         //.map(to grab all word counts for articles)
@@ -109,5 +112,5 @@ var app = app || {};
       .then(console.log)
       .then(callback);
   }
-  Article.module();
+  module.Article = Article;
 }) (app);
