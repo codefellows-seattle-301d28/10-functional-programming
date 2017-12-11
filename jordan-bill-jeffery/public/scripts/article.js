@@ -28,7 +28,7 @@ Article.loadAll = rawData => {
   Article.all = rawData.map(articleObject => new Article(articleObject));
 
   articleCount = Article.all.length;
-  // wordCount = Article.all.map(articleObject => articleObject.split(' ')).reduce((acc, curr) => )
+  //  wordCount = Article.all.map(articleObject => articleObject.split(' ')).reduce((acc, curr) => )
 
   // rawData.map(articleObject => Article.all.push(new Article(articleObject)));
 
