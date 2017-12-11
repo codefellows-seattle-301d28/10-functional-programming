@@ -47,19 +47,34 @@ Article.totalArticles = () => {
 
 
 Article.numWordsAll = () => {
-  app.Article.all.map(article => article.body.split(' ').length).reduce((total, curr) => total + curr);
+  return app.Article.all.map(article => article.body.split(' ').length).reduce((total, curr) => total + curr);
 };
 
 Article.allAuthors = () => {
-  return app.Article.all.map(article => article.author).reduce((result, curr, index, array) => {
-    if (curr !== array[index-1]) result.push(curr);
-    return result;
-  }, []);
+  var prev;
+  return app.Article.all.map(article => article.author)
+  .reduce(function(result, cur) {
+        if (result.indexOf(cur) === -1) result.push(cur);
+        prev = cur;
+        return result;
+    }, []);
 };
 
-// Article.numWordsByAuthor = () => {
-//   return Article.allAuthors().map(author => {})
-// };
+Article.numWordsByAuthor = () => {
+  return Article.allAuthors().map(author => {
+    let authorObj = {};
+    authorObj.name = author;
+    authorObj.words = 0; // starting value
+    let authorWordArr = app.Article.all.map(article => { // map a function to a count of all the words for that author
+      if (article.author === author) {
+        return article.body.split(' ').length;
+      }
+    });
+    authorWordArr = authorWordArr.filter(count => Number(count)); // filter out the undefined data
+    authorObj.words = authorWordArr.reduce((total, curr) => total + curr); // count the words for every array
+    return authorObj;
+  })
+};
 
 Article.truncateTable = callback => {
   $.ajax({
