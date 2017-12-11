@@ -37,11 +37,16 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map().reduce()
+    return Article.all.map(x => x.body.split(' ').length).reduce((acc, curr) => acc + curr);
   };
 
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map(x => x.author).reduce(function(prev, cur) {
+      if (prev.indexOf(cur) === -1) {
+        prev.push(cur);
+      }
+      return prev;
+    }, []);
   };
 
   Article.numWordsByAuthor = () => {
