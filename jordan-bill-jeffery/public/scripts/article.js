@@ -23,16 +23,7 @@ Article.loadAll = rawData => {
 
   
   // rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
-  
-
   Article.all = rawData.map(articleObject => new Article(articleObject));
-
-  // let articleCount = Article.all.length;
-  // wordCount = Article.all.map(
-  // articleObject => articleObject.split(' ')).map(x => x = 1).reduce((acc, current) => acc + current)
-  // )
-
-  // rawData.map(articleObject => Article.all.push(new Article(articleObject)));
 
 };
 
