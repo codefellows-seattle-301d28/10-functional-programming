@@ -21,14 +21,16 @@ Article.prototype.toHtml = function() {
 Article.loadAll = rawData => {
   rawData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
-  /* OLD forEach():
-  rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
-  */
+  
+  // rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
+  
 
   Article.all = rawData.map(articleObject => new Article(articleObject));
 
-  articleCount = Article.all.length;
-  //  wordCount = Article.all.map(articleObject => articleObject.split(' ')).reduce((acc, curr) => )
+  // let articleCount = Article.all.length;
+  // wordCount = Article.all.map(
+  // articleObject => articleObject.split(' ')).map(x => x = 1).reduce((acc, current) => acc + current)
+  // )
 
   // rawData.map(articleObject => Article.all.push(new Article(articleObject)));
 
@@ -43,7 +45,7 @@ Article.fetchAll = callback => {
 };
 
 Article.numWordsAll = () => {
-  return Article.all.map().reduce()
+  return Article.all.map(x => x.body.split(' ').length).reduce((acc,curr) => acc + curr);
 };
 
 Article.allAuthors = () => {
