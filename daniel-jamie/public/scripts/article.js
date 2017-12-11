@@ -45,7 +45,10 @@ Article.numWordsAll = () => {
 };
 
 Article.allAuthors = () => {
-  return Article.all.map().reduce();
+  return Article.all.map(art => art.author).reduce(((a,c) => {
+    if(!a.includes(c)) a.push(c)
+    return a
+  }),[]);
 };
 
 Article.numWordsByAuthor = () => {
