@@ -40,13 +40,20 @@ Article.numWordsAll = () => {
 };
 
 Article.allAuthors = () => {
-  return Article.all.map(x => x.author).reduce((acc, curr) => {if (!acc.includes(curr)) {acc.push(curr)}});
+  return Article.all.map(x => x.author).reduce((acc, curr) => {
+    if (!acc.includes(curr)) {
+      acc.push(curr)
+    }
+    return acc
+  },[]);
 };
 
 Article.numWordsByAuthor = () => {
   return Article.allAuthors().map(author => {
-    name: author,
-    words: Article.all.filter(x => x.author = this.name).map(x => x.body.split(' ').length).reduce((acc,curr) => acc + curr)
+    return {
+      name: author,
+      words: Article.all.filter(x => x.author = this.name).map(x => x.body.split(' ').length).reduce((acc,curr) => acc + curr)
+    }
   })
 };
 
