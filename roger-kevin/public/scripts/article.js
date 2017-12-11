@@ -21,7 +21,6 @@ Article.prototype.toHtml = function() {
 };
 
 Article.loadAll = rawData => {
-  console.log('inside loadall');
   rawData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
 
 
@@ -43,12 +42,23 @@ Article.numWordsAll = () => {
 };
 
 Article.allAuthors = () => {
-  return Article.all.map().reduce();
+  return Article.all.map(article => article.author).reduce((acc, cur) => {
+    if (!acc.includes(cur)) {
+      acc.push(cur);
+    }
+    return acc;
+  },[]);
 };
 
 Article.numWordsByAuthor = () => {
-  return Article.allAuthors().map(author => {})
-};
+  let author_words;
+  return Article.allAuthors().map(author => {
+    author_words = Article.all.map(article => {
+      return (article.author === author) ? article.body.split(' ').length : 0
+    }).reduce((acc, cur) => acc + cur);
+    return {author_name: author, author_num_words: author_words};
+  })
+}
 
 Article.truncateTable = callback => {
   $.ajax({
