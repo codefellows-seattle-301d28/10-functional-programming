@@ -52,7 +52,10 @@ Article.allAuthors = () => {
 };
 
 Article.numWordsByAuthor = () => {
-  return Article.allAuthors().map(author => {})
+  return Article.allAuthors().map(auth => {
+    let bodies = Article.all.filter(a => a.author === auth)
+    return bodies.map(a=>a.body.split(' ').length).reduce((a,c)=>a+c)
+  })
 };
 
 Article.truncateTable = callback => {
