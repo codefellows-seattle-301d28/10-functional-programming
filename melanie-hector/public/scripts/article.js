@@ -45,10 +45,7 @@ var app = app || {};
   };
 
   Article.allAuthors = () => {
-    // let authorName = function(articleObject) {
-    //   return articleObject.author;
-    // };
-    return Article.all.map(x => x.author).reduce((acc, curr) => {
+    return Article.all.map(articleObj => articleObj.author).reduce((acc, curr) => {
       if (acc.indexOf(curr) === -1) {
         acc.push(curr);
       }
