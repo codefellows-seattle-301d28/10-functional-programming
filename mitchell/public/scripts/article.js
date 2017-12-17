@@ -38,24 +38,23 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map(article => article.body.match(/\b\w+g).length).reduce((a, b) => a + b);
+    return Article.all.map(article => article.body.match(/\b\w+/g).length).reduce((a, b) => a + b);
   };
 
   Article.allAuthors = () => {
-    return Article.all.map(article => article.author).reduce((names, name) => {
-      if (!names.includes(name)) {
-        names.push(name);
+    return Article.all.map(article => article.author)
+      .reduce((names, name) => {
+        if (names.indexOf(name) === -1) names.push(name);
         return names;
-      }
-    },
-    []);
+      },
+      []);
   };
 
   Article.numWordsByAuthor = () => {
     return Article.allAuthors().map(author => {
       return {
         name: author,
-        numWords: Article.all.filter(a => a.author === author).map(a => a.body.match(/\b\w+g).length).reduce((a, b) => a + b)
+        numWords: Article.all.filter(a => a.author === author).map(a => a.body.match(/\b\w+/g).length).reduce((a, b) => a + b)
       }
     });
   };
@@ -71,7 +70,7 @@ var app = app || {};
   };
 
   Article.prototype.insertRecord = function(callback) {
-    // REVIEW: Why can't we use an arrow function here for .insertRecord()? //ARROW FUNCTION 
+    // REVIEW: Why can't we use an arrow function here for .insertRecord()? //ARROW FUNCTION
     $.post('/articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
       .then(console.log)
       .then(callback);
