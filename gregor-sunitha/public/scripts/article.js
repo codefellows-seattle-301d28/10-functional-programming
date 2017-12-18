@@ -38,24 +38,33 @@ var app = app || {};
 
   Article.stats = () => {
     Article.numWordsAll();
-    //Article.allAuthors();
-    //Article.numWordsByAuthor();
+    Article.allAuthors();
+    Article.numWordsByAuthor();
   };
 
   Article.numWordsAll = () => {
-    // console.log(Article.all[1]['body']);
-    // console.log(Article.all[1]['body'].length);
-    // console.log(Article.all[1]['body'].split(' ').reduce((acc,cur)=>acc + cur).length);
-    return Article.all.map(words => Article.all[words]['body'].split(' ').reduce((acc,cur)=>acc + cur).length);
+    return Article.all.map(x => x.body.split(' ').length).reduce((acc, curr) => acc + curr);
   };
 
   Article.allAuthors = () => {
-    
-    return Article.all.map().reduce();
+    var prev;
+    return app.Article.all.map(article => article.author)
+      .reduce(function(result, cur) {
+        if (result.indexOf(cur) === -1) result.push(cur);
+        prev = cur;
+        return result;
+      }, []);
   };
 
-  Article.numWordsByAuthor = () => {
-    return Article.allAuthors().map(author => {})
+  Article.numWordsByAuthor = () =>{
+    return Article.allAuthors().map(author => {
+      return {
+        name: author,
+        numWords: Article.all.filter(a => a.author === author) 
+          .map(a => a.body.match(/\b\w+/g).length)
+          .reduce((a,b) => a+b)
+      }
+    })
   };
 
   Article.truncateTable = callback => {
